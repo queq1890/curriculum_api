@@ -18,14 +18,14 @@ ActiveRecord::Schema.define(version: 20180624102354) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "pullrequests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "pull_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "title", null: false
     t.string "message"
     t.text "body", null: false
     t.bigint "curriculums_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["curriculums_id"], name: "index_pullrequests_on_curriculums_id"
+    t.index ["curriculums_id"], name: "index_pull_requests_on_curriculums_id"
   end
 
 end
