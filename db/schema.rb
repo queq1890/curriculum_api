@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180624102354) do
+ActiveRecord::Schema.define(version: 20180626075839) do
 
   create_table "curriculums", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "body"
@@ -19,13 +19,15 @@ ActiveRecord::Schema.define(version: 20180624102354) do
   end
 
   create_table "pull_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "title", null: false
+    t.string "title", default: "no title", null: false
     t.string "message"
-    t.text "body", null: false
-    t.bigint "curriculums_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["curriculums_id"], name: "index_pull_requests_on_curriculums_id"
+    t.string "original_text"
+    t.bigint "curriculum_id"
+    t.integer "status", default: 0
+    t.index ["curriculum_id"], name: "index_pull_requests_on_curriculum_id"
   end
 
+  add_foreign_key "pull_requests", "curriculums"
 end
