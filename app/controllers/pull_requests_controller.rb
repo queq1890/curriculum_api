@@ -2,6 +2,11 @@ class PullRequestsController < ApplicationController
   before_action :set_pull_request, only: %i(update destroy)
   # TODO : admin::pullrequestsControllerを作ってupdateとdestroyは移す？
 
+  def index
+    @pull_requests = PullRequest.where(curriculum_id: params[:curriculum_id], status: 0)
+    render json: @pull_requests
+  end
+
   def create
     @pull_request = PullRequest.new(pull_request_params)
     if @pull_request.save
@@ -12,12 +17,12 @@ class PullRequestsController < ApplicationController
   end
 
   def update
-    # TODO : 該当するカリキュラムの文言の修正する処理 && pullrequestがmergedっていう感じのstatus作り
-    if @pull_request.update
-      render json: @pull_request
-    else
-      render json:  @pull_request.errors, status: :unprocessable_entity
-    end
+    @curriculum = @pull_request.curriculum
+    # 正規表現でoriginal_textに合致する部分をmessageで置き換える
+    @curriculum.body.sub!(@pull_request.original_text, @pull_request.message)
+    @pull_request.update(status: 1)
+    @curriculum.save
+    @pull_request.save
   end
 
   def destroy
@@ -31,8 +36,7 @@ class PullRequestsController < ApplicationController
   end
 
   def pull_request_params
-    params.require(:pull_request).permit(:message, :title, :body)
-    # .merge(curriculum_id: params[:curriculum_id])
+    params.require(:pull_request).permit(:message, :title, :original_text).merge(curriculum_id: params[:curriculum_id])
   end
 
 end
