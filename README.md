@@ -1,24 +1,8 @@
-# README
+# curriculum_api
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Aimed to using with curriculum_client
+(https://github.com/queq1890/curriculum_client)
 
-Things you may want to cover:
+Clone curriculum_alient repo and `rails s -p 3001`
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+And clone this repo and `yarn dev`
